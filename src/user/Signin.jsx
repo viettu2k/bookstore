@@ -1,5 +1,10 @@
 import React from "react";
+import Layout from "../core/Layout";
 
 export default function Signin() {
-  return <div> signin </div>;
+  return (
+    <Layout title="Signin" description="Signin to Node Rect E-commerce App">
+      ...
+    </Layout>
+  );
 }
