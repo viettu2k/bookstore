@@ -20,7 +20,7 @@ export default function AdminDashboard() {
           </li>
           <li className="list-group-item">
             <Link className="nav-link" to="/create/product">
-              Update Profile
+              Create Product
             </Link>
           </li>
         </ul>
