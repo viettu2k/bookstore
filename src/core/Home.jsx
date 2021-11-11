@@ -33,8 +33,18 @@ export default function Home() {
     loadProductsBySell();
   }, []);
 
+  const showError = () => (
+    <div
+      className="alert alert-danger"
+      style={{ display: error ? "" : "none" }}
+    >
+      {error}
+    </div>
+  );
+
   return (
     <Layout title="Home Page" description="Node React E-commerce App">
+      {showError()}
       <h2 className="mb-4">Best Sellers</h2>
       <div className="row">
         {productsBySell.map((product, i) => (
