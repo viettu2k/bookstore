@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-export default function Checkbox({ categories, handleFilters }) {
-  const [checked, setChecked] = useState([]);
+const Checkbox = ({ categories, handleFilters }) => {
+  const [checked, setCheked] = useState([]);
 
   const handleToggle = (c) => () => {
     // return the first index or -1
@@ -12,9 +12,10 @@ export default function Checkbox({ categories, handleFilters }) {
     if (currentCategoryId === -1) {
       newCheckedCategoryId.push(c);
     } else {
-      newCheckedCategoryId.slice(currentCategoryId, 1);
+      newCheckedCategoryId.splice(currentCategoryId, 1);
     }
-    setChecked(newCheckedCategoryId);
+    // console.log(newCheckedCategoryId);
+    setCheked(newCheckedCategoryId);
     handleFilters(newCheckedCategoryId);
   };
 
@@ -29,4 +30,6 @@ export default function Checkbox({ categories, handleFilters }) {
       <label className="form-check-label">{c.name}</label>
     </li>
   ));
-}
+};
+
+export default Checkbox;
