@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function Checkbox({ categories }) {
+export default function Checkbox({ categories, handleFilters }) {
   const [checked, setChecked] = useState([]);
 
   const handleToggle = (c) => () => {
@@ -14,8 +14,8 @@ export default function Checkbox({ categories }) {
     } else {
       newCheckedCategoryId.slice(currentCategoryId, 1);
     }
-    console.log(newCheckedCategoryId);
     setChecked(newCheckedCategoryId);
+    handleFilters(newCheckedCategoryId);
   };
 
   return categories.map((c, i) => (
