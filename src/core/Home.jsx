@@ -43,7 +43,11 @@ export default function Home() {
   );
 
   return (
-    <Layout title="Home Page" description="Node React E-commerce App">
+    <Layout
+      title="Home Page"
+      description="Node React E-commerce App"
+      className="container-fluid"
+    >
       {showError()}
       <h2 className="mb-4">Best Sellers</h2>
       <div className="row">
