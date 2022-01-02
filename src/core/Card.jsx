@@ -90,8 +90,8 @@ const Card = ({
             <input
               type="number"
               className="form-control"
-              onChange={handleChange(product._id)}
               value={count}
+              onChange={handleChange(product._id)}
             />
           </div>
         </div>
@@ -121,7 +121,7 @@ const Card = ({
 
         {showAddToCart(showAddToCartButton)}
 
-        {showRemoveButton(showViewProductButton)}
+        {showRemoveButton(showRemoveProductButton)}
 
         {showCartUpdateOptions(cartUpdate)}
       </div>
