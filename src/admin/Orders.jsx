@@ -2,25 +2,14 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-
-import { listOrders, getStatusValues } from "./apiAdmin";
+import { listOrders, getStatusValues, updateOrderStatus } from "./apiAdmin";
 import moment from "moment";
 
-export default function Orders() {
+const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [statusValues, setStatusValues] = useState([]);
 
   const { user, token } = isAuthenticated();
-
-  const loadStatusValues = () => {
-    getStatusValues(user._id, token).then((data) => {
-      if (data.error) {
-        console.log(data.error);
-      } else {
-        setStatusValues(data);
-      }
-    });
-  };
 
   const loadOrders = () => {
     listOrders(user._id, token).then((data) => {
@@ -28,6 +17,16 @@ export default function Orders() {
         console.log(data.error);
       } else {
         setOrders(data);
+      }
+    });
+  };
+
+  const loadStatusValues = () => {
+    getStatusValues(user._id, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setStatusValues(data);
       }
     });
   };
@@ -56,8 +55,14 @@ export default function Orders() {
     </div>
   );
 
-  const handleStatusChange = (e, order) => {
-    console.log("update order status");
+  const handleStatusChange = (e, orderId) => {
+    updateOrderStatus(user._id, token, orderId, e.target.value).then((data) => {
+      if (data.error) {
+        console.log("Status update failed");
+      } else {
+        loadOrders();
+      }
+    });
   };
 
   const showStatus = (o) => (
@@ -68,8 +73,8 @@ export default function Orders() {
         onChange={(e) => handleStatusChange(e, o._id)}
       >
         <option>Update Status</option>
-        {statusValues.map((status, i) => (
-          <option value={status} key={i}>
+        {statusValues.map((status, index) => (
+          <option key={index} value={status}>
             {status}
           </option>
         ))}
@@ -81,15 +86,17 @@ export default function Orders() {
     <Layout
       title="Orders"
       description={`G'day ${user.name}, you can manage all the orders here`}
+      className="container-fluid"
     >
       <div className="row">
         <div className="col-md-8 offset-md-2">
           {showOrdersLength()}
-          {orders.map((o, i) => {
+
+          {orders.map((o, oIndex) => {
             return (
               <div
                 className="mt-5"
-                key={i}
+                key={oIndex}
                 style={{ borderBottom: "5px solid indigo" }}
               >
                 <h2 className="mb-5">
@@ -99,9 +106,9 @@ export default function Orders() {
                 <ul className="list-group mb-2">
                   <li className="list-group-item">{showStatus(o)}</li>
                   <li className="list-group-item">
-                    Transaction ID:{o.transaction_id}
+                    Transaction ID: {o.transaction_id}
                   </li>
-                  <li className="list-group-item">Amount: {o.amount}</li>
+                  <li className="list-group-item">Amount: ${o.amount}</li>
                   <li className="list-group-item">Ordered by: {o.user.name}</li>
                   <li className="list-group-item">
                     Ordered on: {moment(o.createdAt).fromNow()}
@@ -110,6 +117,7 @@ export default function Orders() {
                     Delivery address: {o.address}
                   </li>
                 </ul>
+
                 <h3 className="mt-4 mb-4 font-italic">
                   Total products in the order: {o.products.length}
                 </h3>
@@ -118,7 +126,10 @@ export default function Orders() {
                   <div
                     className="mb-4"
                     key={pIndex}
-                    style={{ padding: "20px", border: "1px solid indigo" }}
+                    style={{
+                      padding: "20px",
+                      border: "1px solid indigo",
+                    }}
                   >
                     {showInput("Product name", p.name)}
                     {showInput("Product price", p.price)}
@@ -133,4 +144,6 @@ export default function Orders() {
       </div>
     </Layout>
   );
-}
+};
+
+export default Orders;
