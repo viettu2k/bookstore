@@ -1,11 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { createCategory } from "./apiAdmin";
+import { getProducts, deleteProduct } from "./apiAdmin";
 import Search from "../core/Search";
 
 export default function ManageProducts() {
+  const [products, setProducts] = useState([]);
+
+  const { user, token } = isAuthenticated();
+
+  const loadProducts = () => {
+    getProducts().then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setProducts(data);
+      }
+    });
+  };
+
+  const destroy = (productId) => {
+    deleteProduct(productId, user._id, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        loadProducts();
+      }
+    });
+  };
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
   return (
     <Layout
       title="Manage Products"
@@ -13,9 +41,26 @@ export default function ManageProducts() {
       className="container-fluid"
     >
       <div className="row">
-        <div>
-          <Search />
-          <h2 className="mb-4">Manage Products</h2>
+        <div className="col-12">
+          <ul className="list-group-item">
+            {products.map((p, i) => (
+              <li
+                key={i}
+                className="list-group d-flex justify-content-between align-items-center"
+              >
+                <strong>{p.name}</strong>
+                <link to={`/admin/product/update/${p._id}`}>
+                  <span className="badge badge-warning badge-pill">Update</span>
+                </link>
+                <span
+                  onClick={() => destroy(p._id)}
+                  className="badge badge-danger badge-pill"
+                >
+                  Delete
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Layout>
