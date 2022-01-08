@@ -4,7 +4,7 @@ import { getProducts } from "./apiCore";
 import Card from "./Card";
 import Search from "./Search";
 
-export default function Home() {
+const Home = () => {
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState(false);
@@ -21,6 +21,7 @@ export default function Home() {
 
   const loadProductsByArrival = () => {
     getProducts("createdAt").then((data) => {
+      console.log(data);
       if (data.error) {
         setError(data.error);
       } else {
@@ -34,18 +35,9 @@ export default function Home() {
     loadProductsBySell();
   }, []);
 
-  const showError = () => (
-    <div
-      className="alert alert-danger"
-      style={{ display: error ? "" : "none" }}
-    >
-      {error}
-    </div>
-  );
-
   return (
     <Layout
-      title="Home Page"
+      title="FullStack React Node MongoDB Ecommerce App"
       description="Node React E-commerce App"
       className="container-fluid"
     >
@@ -59,7 +51,6 @@ export default function Home() {
         ))}
       </div>
 
-      {showError()}
       <h2 className="mb-4">Best Sellers</h2>
       <div className="row">
         {productsBySell.map((product, i) => (
@@ -70,4 +61,6 @@ export default function Home() {
       </div>
     </Layout>
   );
-}
+};
+
+export default Home;
