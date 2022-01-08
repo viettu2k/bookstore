@@ -3,9 +3,8 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { getProducts, deleteProduct } from "./apiAdmin";
-import Search from "../core/Search";
 
-export default function ManageProducts() {
+const ManageProducts = () => {
   const [products, setProducts] = useState([]);
 
   const { user, token } = isAuthenticated();
@@ -42,16 +41,18 @@ export default function ManageProducts() {
     >
       <div className="row">
         <div className="col-12">
-          <ul className="list-group-item">
+          <h2 className="text-center">Total {products.length} products</h2>
+          <hr />
+          <ul className="list-group">
             {products.map((p, i) => (
               <li
                 key={i}
-                className="list-group d-flex justify-content-between align-items-center"
+                className="list-group-item d-flex justify-content-between align-items-center"
               >
                 <strong>{p.name}</strong>
-                <link to={`/admin/product/update/${p._id}`}>
+                <Link to={`/admin/product/update/${p._id}`}>
                   <span className="badge badge-warning badge-pill">Update</span>
-                </link>
+                </Link>
                 <span
                   onClick={() => destroy(p._id)}
                   className="badge badge-danger badge-pill"
@@ -65,4 +66,6 @@ export default function ManageProducts() {
       </div>
     </Layout>
   );
-}
+};
+
+export default ManageProducts;
