@@ -32,9 +32,13 @@ const UpdateCategory = ({ match }) => {
     });
   };
 
-  useEffect(() => {
-    init(match.params.categoryId);
-  }, []);
+  useEffect(
+    () => {
+      init(match.params.categoryId);
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });

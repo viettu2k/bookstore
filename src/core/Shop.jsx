@@ -21,6 +21,7 @@ const Shop = () => {
     getCategories().then((data) => {
       if (data.error) {
         setError(data.error);
+        console.log(error);
       } else {
         setCategories(data);
       }
@@ -36,6 +37,7 @@ const Shop = () => {
         setFilteredResults(data.data);
         setSize(data.size);
         setSkip(0);
+        setLimit(6);
       }
     });
   };
@@ -65,10 +67,14 @@ const Shop = () => {
     );
   };
 
-  useEffect(() => {
-    init();
-    loadFilteredResults(skip, limit, myFilters.filters);
-  }, []);
+  useEffect(
+    () => {
+      init();
+      loadFilteredResults(skip, limit, myFilters.filters);
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const handleFilters = (filters, filterBy) => {
     // console.log("SHOP", filters, filterBy);

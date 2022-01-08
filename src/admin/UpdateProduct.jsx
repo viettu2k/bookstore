@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { getProduct, getCategories, updateProduct } from "./apiAdmin";
 
 const UpdateProduct = ({ match }) => {
@@ -28,8 +28,8 @@ const UpdateProduct = ({ match }) => {
     description,
     price,
     // categories,
-    category,
-    shipping,
+    // category,
+    // shipping,
     quantity,
     loading,
     error,
@@ -71,9 +71,13 @@ const UpdateProduct = ({ match }) => {
     });
   };
 
-  useEffect(() => {
-    init(match.params.productId);
-  }, []);
+  useEffect(
+    () => {
+      init(match.params.productId);
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const handleChange = (name) => (event) => {
     const value = name === "photo" ? event.target.files[0] : event.target.value;

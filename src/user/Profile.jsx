@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { read, update, updateUser } from "./apiUser";
 
 const Profile = ({ match }) => {
@@ -27,9 +27,13 @@ const Profile = ({ match }) => {
     });
   };
 
-  useEffect(() => {
-    init(match.params.userId);
-  }, []);
+  useEffect(
+    () => {
+      init(match.params.userId);
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const handleChange = (name) => (e) => {
     setValues({ ...values, error: false, [name]: e.target.value });
@@ -40,8 +44,9 @@ const Profile = ({ match }) => {
     update(match.params.userId, token, { name, email, password }).then(
       (data) => {
         if (data.error) {
-          // console.log(data.error);
+          setValues({ ...values, error: true });
           alert(data.error);
+          console.log(error);
         } else {
           updateUser(data, () => {
             setValues({

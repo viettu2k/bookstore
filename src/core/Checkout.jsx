@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
-  getProducts,
   getBraintreeClientToken,
   processPayment,
   createOrder,
 } from "./apiCore";
 import { emptyCart } from "./cartHelpers";
-import Card from "./Card";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 // import "braintree-web"; // not using this package
@@ -37,9 +35,13 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     });
   };
 
-  useEffect(() => {
-    getToken(userId, token);
-  }, []);
+  useEffect(
+    () => {
+      getToken(userId, token);
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const handleAddress = (event) => {
     setData({ ...data, address: event.target.value });
@@ -120,16 +122,16 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
           });
       })
       .catch((error) => {
-        // console.log("dropin error: ", error);
         setData({ ...data, error: error.message });
       });
+    console.log(getNonce);
   };
 
   const showDropIn = () => (
     <div onBlur={() => setData({ ...data, error: "" })}>
       {data.clientToken !== null && products.length > 0 ? (
         <div>
-          <div className="gorm-group mb-3">
+          <div className="form-group mb-3">
             <label className="text-muted">Delivery address:</label>
             <textarea
               onChange={handleAddress}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
-import { Link } from "react-router-dom";
 import { createProduct, getCategories } from "./apiAdmin";
 
 const AddProduct = () => {
@@ -27,13 +26,13 @@ const AddProduct = () => {
     description,
     price,
     categories,
-    category,
-    shipping,
+    // category,
+    // shipping,
     quantity,
     loading,
     error,
     createdProduct,
-    redirectToProfile,
+    // redirectToProfile,
     formData,
   } = values;
 
@@ -52,9 +51,13 @@ const AddProduct = () => {
     });
   };
 
-  useEffect(() => {
-    init();
-  }, []);
+  useEffect(
+    () => {
+      init();
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const handleChange = (name) => (event) => {
     const value = name === "photo" ? event.target.files[0] : event.target.value;

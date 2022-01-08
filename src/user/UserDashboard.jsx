@@ -23,9 +23,13 @@ const Dashboard = () => {
     });
   };
 
-  useEffect(() => {
-    init(_id, token);
-  }, []);
+  useEffect(
+    () => {
+      init(_id, token);
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   const userLinks = () => {
     return (

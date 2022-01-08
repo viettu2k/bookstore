@@ -18,6 +18,7 @@ const Product = (props) => {
         listRelated(data._id).then((data) => {
           if (data.error) {
             setError(data.error);
+            console.log(error);
           } else {
             setRelatedProduct(data);
           }
@@ -26,10 +27,14 @@ const Product = (props) => {
     });
   };
 
-  useEffect(() => {
-    const productId = props.match.params.productId;
-    loadSingleProduct(productId);
-  }, [props]);
+  useEffect(
+    () => {
+      const productId = props.match.params.productId;
+      loadSingleProduct(productId);
+    },
+    // eslint-disable-next-line
+    [props]
+  );
 
   return (
     <Layout

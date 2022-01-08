@@ -21,19 +21,23 @@ const Home = () => {
 
   const loadProductsByArrival = () => {
     getProducts("createdAt").then((data) => {
-      console.log(data);
       if (data.error) {
         setError(data.error);
+        console.log(error);
       } else {
         setProductsByArrival(data);
       }
     });
   };
 
-  useEffect(() => {
-    loadProductsByArrival();
-    loadProductsBySell();
-  }, []);
+  useEffect(
+    () => {
+      loadProductsByArrival();
+      loadProductsBySell();
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   return (
     <Layout
