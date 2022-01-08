@@ -3,7 +3,7 @@ import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 
-export default function AdminDashboard() {
+const AdminDashboard = () => {
   const {
     user: { _id, name, email, role },
   } = isAuthenticated();
@@ -56,8 +56,8 @@ export default function AdminDashboard() {
   return (
     <Layout
       title="Dashboard"
-      description={`G'day ${name}`}
-      className="container"
+      description={`G'day ${name}!`}
+      className="container-fluid"
     >
       <div className="row">
         <div className="col-3">{adminLinks()}</div>
@@ -65,4 +65,6 @@ export default function AdminDashboard() {
       </div>
     </Layout>
   );
-}
+};
+
+export default AdminDashboard;

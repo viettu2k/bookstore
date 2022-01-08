@@ -5,14 +5,14 @@ import { signin, authenticate, isAuthenticated } from "../auth";
 
 const Signin = () => {
   const [values, setValues] = useState({
-    email: "",
-    password: "",
+    email: "ryan@gmail.com",
+    password: "rrrrrr9",
     error: "",
     loading: false,
     redirectToReferrer: false,
   });
 
-  const { email, password, error, loading, redirectToReferrer } = values;
+  const { email, password, loading, error, redirectToReferrer } = values;
   const { user } = isAuthenticated();
 
   const handleChange = (name) => (event) => {
@@ -36,7 +36,7 @@ const Signin = () => {
     });
   };
 
-  const signInForm = () => (
+  const signUpForm = () => (
     <form>
       <div className="form-group">
         <label className="text-muted">Email</label>
@@ -100,7 +100,7 @@ const Signin = () => {
     >
       {showLoading()}
       {showError()}
-      {signInForm()}
+      {signUpForm()}
       {redirectUser()}
     </Layout>
   );

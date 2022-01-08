@@ -12,7 +12,7 @@ const Signup = () => {
     success: false,
   });
 
-  const { name, email, password, error, success } = values;
+  const { name, email, password, success, error } = values;
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -85,7 +85,7 @@ const Signup = () => {
 
   const showSuccess = () => (
     <div
-      className="alert alert-success"
+      className="alert alert-info"
       style={{ display: success ? "" : "none" }}
     >
       New account is created. Please <Link to="/signin">Signin</Link>
