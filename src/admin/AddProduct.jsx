@@ -27,13 +27,13 @@ const AddProduct = () => {
     description,
     price,
     categories,
-    // category,
-    // shipping,
+    category,
+    shipping,
     quantity,
     loading,
     error,
     createdProduct,
-    // redirectToProfile,
+    redirectToProfile,
     formData,
   } = values;
 
@@ -43,18 +43,18 @@ const AddProduct = () => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({ ...values, categories: data, formData: new FormData() });
+        setValues({
+          ...values,
+          categories: data,
+          formData: new FormData(),
+        });
       }
     });
   };
 
-  useEffect(
-    () => {
-      init();
-    },
-    // eslint-disable-next-line
-    []
-  );
+  useEffect(() => {
+    init();
+  }, []);
 
   const handleChange = (name) => (event) => {
     const value = name === "photo" ? event.target.files[0] : event.target.value;
@@ -177,7 +177,7 @@ const AddProduct = () => {
       className="alert alert-info"
       style={{ display: createdProduct ? "" : "none" }}
     >
-      <h2>{`${createdProduct} is created!`}</h2>
+      <h2>{`${createdProduct}`} is created!</h2>
     </div>
   );
 
@@ -187,14 +187,6 @@ const AddProduct = () => {
         <h2>Loading...</h2>
       </div>
     );
-
-  const goBack = () => (
-    <div className="mt-5">
-      <Link to="/admin/dashboard" className="text-warning">
-        Back to Dashboard
-      </Link>
-    </div>
-  );
 
   return (
     <Layout
@@ -207,7 +199,6 @@ const AddProduct = () => {
           {showSuccess()}
           {showError()}
           {newPostForm()}
-          {goBack()}
         </div>
       </div>
     </Layout>

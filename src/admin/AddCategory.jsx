@@ -9,7 +9,7 @@ const AddCategory = () => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // destructure user and token from local storage
+  // destructure user and token from localstorage
   const { user, token } = isAuthenticated();
 
   const handleChange = (e) => {
@@ -32,7 +32,7 @@ const AddCategory = () => {
     });
   };
 
-  const newCategoryForm = () => (
+  const newCategoryFom = () => (
     <form onSubmit={clickSubmit}>
       <div className="form-group">
         <label className="text-muted">Name</label>
@@ -57,7 +57,7 @@ const AddCategory = () => {
 
   const showError = () => {
     if (error) {
-      return <h3 className="text-danger">{name} is should be unique</h3>;
+      return <h3 className="text-danger">Category should be unique</h3>;
     }
   };
 
@@ -72,13 +72,13 @@ const AddCategory = () => {
   return (
     <Layout
       title="Add a new category"
-      description={`G'day ${user.name}, ready to add a new category`}
+      description={`G'day ${user.name}, ready to add a new category?`}
     >
       <div className="row">
         <div className="col-md-8 offset-md-2">
           {showSuccess()}
           {showError()}
-          {newCategoryForm()}
+          {newCategoryFom()}
           {goBack()}
         </div>
       </div>

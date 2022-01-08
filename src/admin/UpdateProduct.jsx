@@ -20,13 +20,14 @@ const UpdateProduct = ({ match }) => {
     redirectToProfile: false,
     formData: "",
   });
+  const [categories, setCategories] = useState([]);
 
   const { user, token } = isAuthenticated();
   const {
     name,
     description,
     price,
-    categories,
+    // categories,
     category,
     shipping,
     quantity,
@@ -65,10 +66,7 @@ const UpdateProduct = ({ match }) => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({
-          categories: data,
-          formData: new FormData(),
-        });
+        setCategories(data);
       }
     });
   };
